@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,9 +22,10 @@ import fr.ecp.sio.superchat.model.NavigationDrawerItem;
 import fr.ecp.sio.superchat.model.User;
 
 public class MainActivity extends ActionBarActivity {
-    ListView mDrawerList;
-    MenuDrawerAdapter mDrawerAdapter;
-    DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private MenuDrawerAdapter mDrawerAdapter;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     private static final int REQUEST_LOGIN_FOR_POST = 1;
 
@@ -40,6 +43,27 @@ public class MainActivity extends ActionBarActivity {
         }
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this,
+                mDrawerLayout,
+                R.string.drawer_open,
+                R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         mDrawerList = (ListView) mDrawerLayout.findViewById(R.id.drawer_list);
         mDrawerAdapter = new MenuDrawerAdapter();
         mDrawerAdapter.addMenuItems(this, AccountManager.isConnected(this));
@@ -50,8 +74,19 @@ public class MainActivity extends ActionBarActivity {
                 selectItem(position);
             }
         });
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        //menu.findItem(R.id.ic).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,6 +109,13 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
     }
 
     private void selectItem(int position) {

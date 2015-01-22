@@ -13,7 +13,7 @@ import java.io.IOException;
 import fr.ecp.sio.superchat.api.ApiClient;
 
 /**
- * Created by Michaël on 12/12/2014.
+ * Created by Betezed on 12/12/2014.
  */
 public class PostActivity extends ActionBarActivity {
 

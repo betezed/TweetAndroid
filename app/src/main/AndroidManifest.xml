@@ -20,7 +20,8 @@
         </activity>
 
         <activity android:name=".TweetsActivity" />
-
+        <activity android:name=".TabsActivity" />
+        <activity android:name=".FollowActivity" />
         <activity android:name=".PostActivity"
                 android:theme="@style/AppTheme.DialogWhenLarge" />
 

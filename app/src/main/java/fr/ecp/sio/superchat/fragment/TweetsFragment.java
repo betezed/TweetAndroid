@@ -16,14 +16,13 @@ import fr.ecp.sio.superchat.model.Tweet;
 import fr.ecp.sio.superchat.model.User;
 
 /**
- * Created by Michaël on 05/12/2014.
+ * Created by Betezed on 05/12/2014.
  */
 public class TweetsFragment extends ListFragment implements LoaderManager.LoaderCallbacks<List<Tweet>> {
 
     private static final int LOADER_TWEETS = 1000;
 
-    private static final String ARG_USER = "user";
-    private static final String ARG_HANDLE = "handle";
+    public static final String ARG_USER = "user";
 
     private User mUser;
     private TweetsAdapter mListAdapter;

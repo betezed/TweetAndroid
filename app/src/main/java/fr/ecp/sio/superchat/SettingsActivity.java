@@ -8,7 +8,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 
 /**
- * Created by Michaël on 12/12/2014.
+ * Created by Betezed on 12/12/2014.
  */
 @SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity {

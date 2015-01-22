@@ -22,7 +22,7 @@ import fr.ecp.sio.superchat.api.ApiClient;
 import fr.ecp.sio.superchat.model.User;
 
 /**
- * Created by Michaël on 05/12/2014.
+ * Created by Betezed on 05/12/2014.
  */
 public class UsersAdapter extends BaseAdapter {
 

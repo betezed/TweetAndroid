@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 import fr.ecp.sio.superchat.model.User;
 
 /**
- * Created by Michaël on 12/12/2014.
+ * Created by Betezed on 12/12/2014.
  */
 public class AccountManager {
 

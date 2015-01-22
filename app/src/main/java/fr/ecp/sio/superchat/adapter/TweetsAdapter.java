@@ -12,7 +12,7 @@ import fr.ecp.sio.superchat.R;
 import fr.ecp.sio.superchat.model.Tweet;
 
 /**
- * Created by Michaël on 05/12/2014.
+ * Created by Betezed on 05/12/2014.
  */
 public class TweetsAdapter extends BaseAdapter {
 

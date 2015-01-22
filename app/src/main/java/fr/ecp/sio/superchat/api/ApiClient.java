@@ -21,7 +21,7 @@ import fr.ecp.sio.superchat.model.Tweet;
 import fr.ecp.sio.superchat.model.User;
 
 /**
- * Created by Michaël on 12/12/2014.
+ * Created by Betezed on 12/12/2014.
  */
 public class ApiClient {
 
@@ -37,16 +37,13 @@ public class ApiClient {
         return IOUtils.toString(stream);
     }
 
-    public List<User> getUsers(Context context, int listUserType, String token) throws IOException {
+    public List<User> getUsers(Context context, int listUserType, String handle, String token) throws IOException {
         String api_route;
-        String handle;
         switch (listUserType) {
             case UsersFragment.FOLLOWER_USERS:
-                handle = AccountManager.getUserHandle(context);
                 api_route = handle + "/followers/";
                 break;
             case UsersFragment.FOLLOWING_USERS:
-                handle = AccountManager.getUserHandle(context);
                 api_route = handle + "/followings/";
                 break;
             default:

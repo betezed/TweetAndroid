@@ -12,16 +12,18 @@ import fr.ecp.sio.superchat.api.ApiClient;
 import fr.ecp.sio.superchat.model.User;
 
 /**
- * Created by Michaël on 05/12/2014.
+ * Created by Betezed on 05/12/2014.
  */
 public class UsersLoader extends AsyncTaskLoader<List<User>> {
 
     private List<User> mResult;
     private int mListUserType;
+    private String mHandle;
 
-    public UsersLoader(Context context, int listUserType) {
+    public UsersLoader(Context context, int listUserType, String handle) {
         super(context);
         mListUserType = listUserType;
+        mHandle = handle;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class UsersLoader extends AsyncTaskLoader<List<User>> {
         try {
             String token = null;
             if (AccountManager.isConnected(getContext())) token = AccountManager.getUserToken(getContext());
-            return new ApiClient().getUsers(getContext(), mListUserType, token);
+            return new ApiClient().getUsers(getContext(), mListUserType, mHandle, token);
         } catch (IOException e) {
             Log.e(UsersLoader.class.getName(), "Failed to download users", e);
             return null;

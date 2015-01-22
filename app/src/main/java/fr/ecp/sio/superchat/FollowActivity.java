@@ -5,25 +5,24 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 
 import fr.ecp.sio.superchat.fragment.TweetsFragment;
+import fr.ecp.sio.superchat.fragment.UsersFragment;
 
 /**
- * Created by Betezed on 05/12/2014.
+ * Created by betezed on 22/01/15.
  */
-public class TweetsActivity extends ActionBarActivity {
-
+public class FollowActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tweets_activity);
+        setContentView(R.layout.follow_activity);
 
         if (savedInstanceState == null) {
-            Fragment tweetsFragment = new TweetsFragment();
-            tweetsFragment.setArguments(getIntent().getExtras());
+            Fragment userFragment = new UsersFragment();
+            userFragment.setArguments(getIntent().getExtras());
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.tweet_content, tweetsFragment)
+                    .add(R.id.follow_content, userFragment)
                     .commit();
         }
     }
-
 }

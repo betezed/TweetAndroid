@@ -53,5 +53,8 @@
     <string name="follower_add">Following ajouté !</string>
     <string name="follower_delete">Following supprimé !</string>
     <string name="me">Moi</string>
+    <string name="followings">Followings</string>
+    <string name="followers">Followers</string>
+    <string name="tweets">Tweets</string>
 
 </resources>

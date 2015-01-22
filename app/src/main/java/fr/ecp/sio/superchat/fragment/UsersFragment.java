@@ -16,15 +16,17 @@ import android.widget.ListView;
 import java.util.List;
 
 import fr.ecp.sio.superchat.AccountManager;
+import fr.ecp.sio.superchat.FollowActivity;
 import fr.ecp.sio.superchat.PostActivity;
 import fr.ecp.sio.superchat.R;
+import fr.ecp.sio.superchat.TabsActivity;
 import fr.ecp.sio.superchat.TweetsActivity;
 import fr.ecp.sio.superchat.adapter.UsersAdapter;
 import fr.ecp.sio.superchat.loaders.UsersLoader;
 import fr.ecp.sio.superchat.model.User;
 
 /**
- * Created by Michaël on 05/12/2014.
+ * Created by Betezed on 05/12/2014.
  */
 public class UsersFragment extends ListFragment implements LoaderManager.LoaderCallbacks<List<User>> {
 
@@ -35,6 +37,7 @@ public class UsersFragment extends ListFragment implements LoaderManager.LoaderC
     public static final int FOLLOWER_USERS = 1;
     public static final int FOLLOWING_USERS = 2;
     public static final String LIST_TYPE = "listUsers";
+    public static final String HANDLE = "handle";
 
 
     private UsersAdapter mListAdapter;
@@ -66,6 +69,23 @@ public class UsersFragment extends ListFragment implements LoaderManager.LoaderC
         if (mIsMasterDetailsMode) {
             getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         }
+        if (getActivity() instanceof FollowActivity) {
+            int listType = ALL_USERS;
+            String title;
+            if (getArguments() != null)
+                listType = getArguments().getInt(LIST_TYPE);
+            switch (listType) {
+                case FOLLOWING_USERS:
+                    title = getString(R.string.followings);
+                    break;
+                case FOLLOWER_USERS:
+                    title = getString(R.string.followers);
+                    break;
+                default:
+                    title = "";
+            }
+            getActivity().setTitle(title);
+        }
     }
 
     @Override
@@ -77,9 +97,15 @@ public class UsersFragment extends ListFragment implements LoaderManager.LoaderC
     @Override
     public Loader<List<User>> onCreateLoader(int id, Bundle args) {
         int listType = ALL_USERS;
-        if (getArguments() != null)
+        String handle = AccountManager.getUserHandle(getActivity());
+        if (getArguments() != null) {
             listType = getArguments().getInt(LIST_TYPE);
-        return new UsersLoader(getActivity(), listType);
+            if (getArguments().containsKey(TweetsFragment.ARG_USER)) {
+                User user = getArguments().getParcelable(TweetsFragment.ARG_USER);
+                handle = user.getHandle();
+            }
+        }
+        return new UsersLoader(getActivity(), listType, handle);
     }
 
     @Override
@@ -101,7 +127,7 @@ public class UsersFragment extends ListFragment implements LoaderManager.LoaderC
                     .replace(R.id.tweets_content, tweetsFragment)
                     .commit();
         } else {
-            Intent intent = new Intent(getActivity(), TweetsActivity.class);
+            Intent intent = new Intent(getActivity(), TabsActivity.class);
             intent.putExtras(TweetsFragment.setUserArgument(user));
             startActivity(intent);
         }
