@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Super Chat</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="friends">Mes followers</string>
+    <string name="online">Connecté</string>
+    <string name="offline">Déconnecté</string>
+    <string name="handle">Login</string>
+    <string name="password">Mot de passe</string>
+    <string name="required">Requis</string>
+    <string name="login_success">Bienvenue !</string>
+    <string name="login_error">Erreur de connexion</string>
+    <string name="message">Message</string>
+    <string name="post_success">Votre message a été envoyé.</string>
+    <string name="post_error">Un erreur s\'est produite.</string>
+    <string name="logout">Déconnexion</string>
+    <string name="logout_confirm">Voulez-vous vraiment vous déconnecter ?</string>
+    <string name="leftDrawer">Clicked !</string>
+
+    <string name="drawer_open">Menu ouvert</string>
+    <string name="drawer_close">Menu fermé</string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Connexion</item>
+        <item >Menu principal</item>
+        <item >Mes tweets</item>
+        <item >Mes followings</item>
+        <item >Mes followers</item>
+        <item >Déconnexion</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_action_login</item>
+        <item>@drawable/ic_action_home</item>
+        <item>@drawable/ic_action_tweets</item>
+        <item>@drawable/ic_action_followings</item>
+        <item>@drawable/ic_action_followings</item>
+        <item>@drawable/ic_action_disconnect</item>
+    </array>
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    <string name="login">Connexion</string>
+    <string name="home">Menu principal</string>
+    <string name="deconnexion">Vous avez été deconnecté(e)</string>
+    <string name="unfollow">Ne plus suivre</string>
+    <string name="follow">Suivre</string>
+    <string name="follower_add">Following ajouté !</string>
+    <string name="follower_delete">Following supprimé !</string>
+    <string name="me">Moi</string>
+
+</resources>

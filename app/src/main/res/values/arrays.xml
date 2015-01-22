@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="items">
+        <item>Tweets</item>
+        <item>Followers</item>
+        <item>Followings</item>
+        <item>Connection</item>
+        <item>Disconnection</item>
+        <item>About</item>
+    </string-array>
+</resources>
