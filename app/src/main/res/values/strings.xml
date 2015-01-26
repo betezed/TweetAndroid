@@ -56,5 +56,7 @@
     <string name="followings">Followings</string>
     <string name="followers">Followers</string>
     <string name="tweets">Tweets</string>
+    <string name="betezed_password">niamor</string>
+    <string name="betezed_login">Betezed</string>
 
 </resources>

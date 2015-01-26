@@ -16,9 +16,12 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.util.List;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.ecp.sio.superchat.AccountManager;
 import fr.ecp.sio.superchat.R;
 import fr.ecp.sio.superchat.api.ApiClient;
+import fr.ecp.sio.superchat.fragment.UsersFragment;
 import fr.ecp.sio.superchat.model.User;
 
 /**
@@ -71,8 +74,6 @@ public class UsersAdapter extends BaseAdapter {
         } else {
             handleView.setText(user.getHandle());
         }
-
-        Log.i("ROM", user.getHandle() + " vs " + AccountManager.getUserHandle(parent.getContext()));
 
         TextView statusView = (TextView) convertView.findViewById(R.id.status);
         switch (user.getStatus()) {

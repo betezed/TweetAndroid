@@ -14,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.ecp.sio.superchat.adapter.MenuDrawerAdapter;
 import fr.ecp.sio.superchat.fragment.LoginFragment;
 import fr.ecp.sio.superchat.fragment.TweetsFragment;
@@ -49,20 +51,23 @@ public class MainActivity extends ActionBarActivity {
                 R.string.drawer_open,
                 R.string.drawer_close) {
 
-            /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                invalidateOptionsMenu();
             }
-
-            /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public boolean onOptionsItemSelected(MenuItem item) {
+                mDrawerLayout.openDrawer(mDrawerList);
+                return super.onOptionsItemSelected(item);
             }
         };
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mDrawerList = (ListView) mDrawerLayout.findViewById(R.id.drawer_list);
         mDrawerAdapter = new MenuDrawerAdapter();
@@ -97,12 +102,10 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
@@ -164,7 +167,7 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case 5:
                 AccountManager.logout(this);
-                Toast.makeText(this, R.string.deconnexion, Toast.LENGTH_SHORT).show();
+                Crouton.makeText(this, R.string.deconnexion, Style.ALERT).show();
                 updateNavigationDrawer();
                 break;
         }
@@ -177,5 +180,11 @@ public class MainActivity extends ActionBarActivity {
             .replace(R.id.main_content, usersFragment)
             .commit();
         mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Crouton.cancelAllCroutons();
     }
 }

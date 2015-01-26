@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.ecp.sio.superchat.AccountManager;
 import fr.ecp.sio.superchat.MainActivity;
 import fr.ecp.sio.superchat.R;
@@ -98,9 +100,9 @@ public class LoginFragment extends DialogFragment implements DialogInterface.OnS
                     AccountManager.login(getActivity(), token, handle);
                     ((MainActivity) getActivity()).updateNavigationDrawer();
                     dismiss();
-                    Toast.makeText(getActivity(), R.string.login_success, Toast.LENGTH_SHORT).show();
+                    Crouton.makeText(getActivity(), R.string.login_success, Style.CONFIRM).show();
                 } else {
-                    Toast.makeText(getActivity(), R.string.login_error, Toast.LENGTH_SHORT).show();
+                    Crouton.makeText(getActivity(), R.string.login_error, Style.ALERT).show();
                 }
             }
 

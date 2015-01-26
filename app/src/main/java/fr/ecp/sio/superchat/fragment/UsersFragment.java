@@ -42,6 +42,7 @@ public class UsersFragment extends ListFragment implements LoaderManager.LoaderC
 
     private UsersAdapter mListAdapter;
     private boolean mIsMasterDetailsMode;
+    private int mListType = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,11 +71,10 @@ public class UsersFragment extends ListFragment implements LoaderManager.LoaderC
             getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         }
         if (getActivity() instanceof FollowActivity) {
-            int listType = ALL_USERS;
             String title;
             if (getArguments() != null)
-                listType = getArguments().getInt(LIST_TYPE);
-            switch (listType) {
+                mListType = getArguments().getInt(LIST_TYPE);
+            switch (mListType) {
                 case FOLLOWING_USERS:
                     title = getString(R.string.followings);
                     break;
@@ -96,16 +96,15 @@ public class UsersFragment extends ListFragment implements LoaderManager.LoaderC
 
     @Override
     public Loader<List<User>> onCreateLoader(int id, Bundle args) {
-        int listType = ALL_USERS;
         String handle = AccountManager.getUserHandle(getActivity());
         if (getArguments() != null) {
-            listType = getArguments().getInt(LIST_TYPE);
+            mListType = getArguments().getInt(LIST_TYPE);
             if (getArguments().containsKey(TweetsFragment.ARG_USER)) {
                 User user = getArguments().getParcelable(TweetsFragment.ARG_USER);
                 handle = user.getHandle();
             }
         }
-        return new UsersLoader(getActivity(), listType, handle);
+        return new UsersLoader(getActivity(), mListType, handle);
     }
 
     @Override
@@ -119,17 +118,19 @@ public class UsersFragment extends ListFragment implements LoaderManager.LoaderC
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         User user = mListAdapter.getItem(position);
-        if (mIsMasterDetailsMode) {
-            Fragment tweetsFragment = new TweetsFragment();
-            tweetsFragment.setArguments(TweetsFragment.setUserArgument(user));
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.tweets_content, tweetsFragment)
-                    .commit();
-        } else {
-            Intent intent = new Intent(getActivity(), TabsActivity.class);
-            intent.putExtras(TweetsFragment.setUserArgument(user));
-            startActivity(intent);
+        if (mListType == ALL_USERS) {
+            if (mIsMasterDetailsMode) {
+                Fragment tweetsFragment = new TweetsFragment();
+                tweetsFragment.setArguments(TweetsFragment.setUserArgument(user));
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.tweets_content, tweetsFragment)
+                        .commit();
+            } else {
+                Intent intent = new Intent(getActivity(), TabsActivity.class);
+                intent.putExtras(TweetsFragment.setUserArgument(user));
+                startActivity(intent);
+            }
         }
     }
 

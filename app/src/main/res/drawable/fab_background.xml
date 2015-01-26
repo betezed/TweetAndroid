@@ -8,7 +8,7 @@
     </item>
     <item>
         <shape android:shape="oval">
-            <size android:height="56dp" android:width="56dp" />
+            <size android:height="53dp" android:width="53dp" />
             <solid android:color="@color/super_chat" />
         </shape>
     </item>
