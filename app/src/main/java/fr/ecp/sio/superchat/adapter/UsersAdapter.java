@@ -1,5 +1,6 @@
 package fr.ecp.sio.superchat.adapter;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import java.util.List;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.ecp.sio.superchat.AccountManager;
+import fr.ecp.sio.superchat.MainActivity;
 import fr.ecp.sio.superchat.R;
 import fr.ecp.sio.superchat.api.ApiClient;
 import fr.ecp.sio.superchat.fragment.UsersFragment;
@@ -32,10 +34,6 @@ public class UsersAdapter extends BaseAdapter {
     private static final int IS_FOLLOWING = 1;
     private static final int IS_NOT_FOLLOWING = 0;
     private List<User> mUsers;
-
-    public List<User> getUsers() {
-        return mUsers;
-    }
 
     public void setUsers(List<User> users) {
         mUsers = users;
@@ -84,15 +82,11 @@ public class UsersAdapter extends BaseAdapter {
         ImageView profilePictureView = (ImageView) convertView.findViewById(R.id.profile_picture);
         Picasso.with(convertView.getContext()).load(user.getProfilePicture()).into(profilePictureView);
         final Button button = (Button) convertView.findViewById(R.id.following);
-        if (AccountManager.isConnected(parent.getContext()) && !user.getHandle().equals(AccountManager.getUserHandle(parent.getContext()))) {
-            if (user.isFollowing()) {
-                button.setText(R.string.unfollow);
-                button.setTag(IS_FOLLOWING);
-            }
-            else {
-                button.setText(R.string.follow);
-                button.setTag(IS_NOT_FOLLOWING);
-            }
+        if (AccountManager.isConnected(parent.getContext())
+                && !user.getHandle().equals(AccountManager.getUserHandle(parent.getContext()))
+                && parent.getContext().getClass().getName().equals(MainActivity.class.getName())) {
+            setIsFollowing(button, user.isFollowing());
+
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -121,17 +115,17 @@ public class UsersAdapter extends BaseAdapter {
 
                         @Override
                         protected void onPostExecute(Void aVoid) {
+                            setIsFollowing(button, (Integer) button.getTag() == IS_NOT_FOLLOWING);
+                            int notification;
+                            Style style;
                             if ((Integer) button.getTag() == IS_FOLLOWING) {
-                                Toast.makeText(parent.getContext(), R.string.follower_delete, Toast.LENGTH_SHORT).show();
-                                button.setText(R.string.follow);
-                                button.setTag(IS_NOT_FOLLOWING);
+                                notification = R.string.follower_add;
+                                style = Style.CONFIRM;
+                            } else {
+                                notification = R.string.follower_delete;
+                                style = Style.ALERT;
                             }
-                            else {
-                                Toast.makeText(parent.getContext(), R.string.follower_add, Toast.LENGTH_SHORT).show();
-                                button.setText(R.string.unfollow);
-                                button.setTag(IS_FOLLOWING);
-                            }
-
+                            Crouton.makeText((Activity) parent.getContext(), notification, style).show();
                             super.onPostExecute(aVoid);
                         }
                     }.execute(v);
@@ -141,7 +135,17 @@ public class UsersAdapter extends BaseAdapter {
             button.setVisibility(View.GONE);
         }
         return convertView;
+    }
 
+    private void setIsFollowing(Button b, boolean isFollowing) {
+        if (isFollowing) {
+            b.setText(R.string.unfollow);
+            b.setTag(IS_FOLLOWING);
+        }
+        else {
+            b.setText(R.string.follow);
+            b.setTag(IS_NOT_FOLLOWING);
+        }
     }
 
 }
